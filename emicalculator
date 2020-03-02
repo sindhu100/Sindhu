@@ -1,0 +1,49 @@
+package realtime.realtime;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class emicalcalculatorTest {
+  @Test
+  public void emicalculation() throws InterruptedException {
+	  
+	  System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Java\\Selenium\\chromedriver_win32\\chromedriver.exe");
+	  
+	  WebDriver driver = new ChromeDriver();
+	  
+	  driver.get("https://emicalculator.net/");
+	  
+	  driver.manage().window().maximize();
+	  
+	driver.findElement(By.linkText("Personal Loan")).click();
+	Thread.sleep(3000);
+	
+	Actions slider = new Actions(driver);
+	
+	
+	WebElement pl = driver.findElement(By.xpath("//div[@id='loanamountslider']//span[@class='ui-slider-handle ui-state-default ui-corner-all'] "));
+	new Actions(driver).dragAndDropBy(pl, 278, 0).build().perform();
+	Thread.sleep(3000);
+	
+	WebElement interest = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/main[1]/article[1]/div[3]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[5]/span[1]"));
+	new Actions(driver).dragAndDropBy(interest, -245, 0).build().perform();
+	Thread.sleep(3000);
+	
+	WebElement tenure = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/main[1]/article[1]/div[3]/div[1]/div[1]/div[1]/div[2]/form[1]/div[1]/div[8]/span[1]"));
+	new Actions(driver).dragAndDropBy(tenure, 125, 0).build().perform();
+	Thread.sleep(3000);
+	
+	String loanemi = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/main[1]/article[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/p[1]/span[1]")).getText();
+	
+	Assert.assertEquals(loanemi, "25,363");
+	
+	Thread.sleep(3000);
+	
+	driver.close();
+  }
+}
